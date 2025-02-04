@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ginika, Will You Be My Valentine? 💘</title>
+    <style>
+        :root {
+            --primary-pink: #ff69b4;  /* Hot pink */
+            --secondary-pink: #ffb6c1; /* Light pink */
+        }
+
+        body {
+            font-family: 'Arial', cursive;
+            background: linear-gradient(45deg, var(--primary-pink), var(--secondary-pink));
+            text-align: center;
+            padding: 20px;
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: 50px auto;
+            padding: 30px;
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 15px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .photo-collage {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            justify-content: center;
+            margin: 20px 0;
+        }
+
+        .photo-collage img {
+            width: 180px;
+            height: 180px;
+            object-fit: cover;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s;
+        }
+
+        .buttons button {
+            padding: 10px 20px;
+            font-size: 16px;
+            margin: 10px;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+
+        #yesBtn {
+            background-color: #ff69b4;
+            color: white;
+        }
+
+        #noBtn {
+            background-color: #f3f3f3;
+            color: black;
+            position: relative;
+        }
+
+        /* Floating Hearts */
+        .heart-floating {
+            position: fixed;
+            color: red;
+            font-size: 24px;
+            animation: floatUp 4s linear infinite;
+        }
+
+        @keyframes floatUp {
+            0% {
+                transform: translateY(0);
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(-100vh);
+                opacity: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div id="hearts"></div>
+    
+    <div class="container" id="container">
+        <h1>Ginika, Will You Be My Valentine? 💘</h1>
+        <div class="heart">🌹</div>
+
+        <div class="photo-collage">
+            <img src="C:\Users\USER\Desktop\Openme\images\Moment3.jpg" alt="Our special moment 1">
+            <img src="C:\Users\USER\Desktop\Openme\images\Moment5.JPG" alt="Our special moment 2">
+            <img src="C:\Users\USER\Desktop\Openme\images\Moment2.jpg" alt="Our special moment 3">
+            <img src="C:\Users\USER\Desktop\Openme\images\Moment4.jpg" alt="Our special moment 4">
+        </div>
+
+        <p>Dear Ginika,</p>
+        <p>Your smile lights up my day, a warmth that makes my heart beat. 💖</p>
+        <p>In every moment, your presence feels right. With you, I'm home. 🏡</p>
+        <p>Thank you for sharing your beauty and awesomeness with me. 🌟</p>
+
+        <div class="music-player">
+            <h3>Our Song: "Running (To You)" 🎶</h3>
+            <iframe style="border-radius:12px"
+            src="https://open.spotify.com/embed/track/5rTC3tKShDyYK0wk0rq96X?utm_source=generator"
+            width="100%"
+            height="152"
+            frameborder="0"
+            allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
+            loading="lazy">
+    </iframe>
+    
+        </div>
+
+        <div class="buttons">
+            <button id="yesBtn" onclick="handleResponse(true)">YES! 💝</button>
+            <button id="noBtn" onmouseover="moveButton()" onclick="handleResponse(false)">Umm...</button>
+        </div>
+    </div>
+
+    <script>
+        function createHearts() {
+            const heartsContainer = document.getElementById('hearts');
+            for (let i = 0; i < 20; i++) {
+                const heart = document.createElement('div');
+                heart.className = 'heart-floating';
+                heart.innerHTML = '❤️';
+                heart.style.left = Math.random() * 100 + 'vw';
+                heart.style.animationDelay = Math.random() * 2 + 's';
+                heartsContainer.appendChild(heart);
+            }
+        }
+
+        function moveButton() {
+            const noBtn = document.getElementById('noBtn');
+            const maxX = window.innerWidth - noBtn.clientWidth - 20;
+            const maxY = window.innerHeight - noBtn.clientHeight - 20;
+
+            noBtn.style.position = 'absolute';
+            noBtn.style.left = Math.min(Math.random() * window.innerWidth, maxX) + 'px';
+            noBtn.style.top = Math.min(Math.random() * window.innerHeight, maxY) + 'px';
+        }
+
+        function handleResponse(response) {
+            let answer = response ? "YES" : "NO";
+            let formURL = "https://docs.google.com/forms/d/e/1FAIpQLScG8lfXm3g-zepXiqc_RjRnrO6sjm80JEhQhn0Qr2m-elHXWA/formResponse"; 
+            let params = `entry.1246245426=${answer}`;
+    
+            // Send response to Google Form
+            fetch(formURL + params, { mode: "no-cors" })
+                .then(() => console.log("Response sent to Google Forms"))
+                .catch(err => console.error("Error:", err));
+    
+            const container = document.getElementById('container');
+            if (response) {
+                container.innerHTML = `
+                    <h1>YAY! 💖🎉</h1>
+                    <div class="heart" style="font-size: 80px;">🥰</div>
+                    <p>You've made Nosakhare the happiest person alive! 🌟</p>
+                    <p>Can't wait to create more memories together! 💞</p>
+                    <p>Forever yours,<br>Nosakhare</p>
+                `;
+                createHearts();
+            } else {
+                alert("Nice try! You're stuck with me! 😏💘");
+            }
+        }
+
+        createHearts();
+    </script>
+</body>
+</html>
